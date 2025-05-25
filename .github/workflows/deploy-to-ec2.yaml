@@ -24,7 +24,6 @@ jobs:
       - name: install deps and restart
         run: |
           ls
-          cd deploy-to-ec2
-          cd backend npm ci && npm run build
+          cd backend && npm ci && npm run build
           cd ../frontend && npm ci && npm run build
           pm2 restart backend-server && pm2 restart frontend-server
