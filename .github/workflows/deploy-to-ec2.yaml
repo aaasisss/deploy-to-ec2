@@ -16,6 +16,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
+            export NVM_DIR="$HOME/.nvm"
+            source "$NVM_DIR/nvm.sh"
+            nvm use node
             ls && cd deploy-to-ec2
             cd backend && npm ci && npm run build
             cd ../frontend && npm ci && npm run build
