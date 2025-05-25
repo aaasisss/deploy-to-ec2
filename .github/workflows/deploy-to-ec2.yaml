@@ -15,15 +15,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           port: 22
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: install deps and restart
-        run: |
-          ls
-          cd backend && npm ci && npm run build
-          cd ../frontend && npm ci && npm run build
-          pm2 restart backend-server && pm2 restart frontend-server
+          script: |
+            ls && cd deploy-to-ec2
+            cd backend && npm ci && npm run build
+            cd ../frontend && npm ci && npm run build
+            pm2 restart backend-server && pm2 restart frontend-server
