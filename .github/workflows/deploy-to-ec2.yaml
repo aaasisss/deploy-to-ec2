@@ -1,0 +1,30 @@
+name: Deploy application to ec2
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute remote SSH commands using ssh key
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: install deps and restart
+        run: |
+          ls
+          cd backend/
+          npm ci
+          npm run build
+          npm run start
